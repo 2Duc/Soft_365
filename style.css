@@ -53,8 +53,8 @@ header .navbar .container-fluid {
 }
 .search-wrapper{
     flex: 1;
-    min-width: 180px;
-    max-width: 500px;
+    min-width: 350px;
+    max-width: 700px;
     margin: 0 auto;
 }
 #contact{
@@ -1040,23 +1040,46 @@ h3{
     display: none;
 } */
 
-@media (max-width: 576px) {
+@media (max-width: 625px) {
     .header-container{
         gap: 8px;
     }
-    .search-wrapper{
-        flex: 2px;
-        min-width: 0;
+    .search-wrapper {
+        flex: 1;
+        min-width: 20px;
+        max-width: 50px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    #search {
+        width: 100%;
+        font-size: 11px;
+        padding: 6px 8px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .hotline-wrapper{
+        flex-shrink: 0;
+        margin-left: 0;
     }
     .hotline-text{
         display: flex;
+        flex-direction: column;
     }
     #hotline{
-        font-size: 12px;
+        font-size: 9px;
+        padding: 11px;
+    }
+    #hotline-number{
+        font-size: 11px;
     }
     #contact #phone{
         height: 20px;
         width: 20px;
+        margin-top: 0;
+    }
+    #contact{
+        gap: 4px;
     }
     .product-card { 
         max-width: 210px; 
@@ -1107,10 +1130,17 @@ h3{
     .logo-wrapper{
         flex-shrink: 0;
     }
-    .search-wrapper{
-        flex: 1;
-        min-width: 80px;
-        margin: 0 2px;
+    .search-wrapper {
+        flex: 0 1 auto;
+        min-width: 150px;
+        max-width: 150px;
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #search {
+        width: 100%;
+        font-size: 12px;
+        padding: 7px 10px;
     }
     .hotline-wrapper{
         flex-shrink: 0;
@@ -1181,12 +1211,20 @@ h3{
     .logo-hotline{
         justify-content: space-between;
     }
-    .search-wrapper{
+    /* .search-wrapper{
         min-width: 120px;
+    } */
+    .search-wrapper {
+        flex: 0 1 auto;
+        min-width: 320px;
+        max-width: 480px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
-    .search{
-        max-width: 2000px;
-        margin-top: 5px;
+    #search {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 12px;
     }
     #categories td{
         padding: 10px 12px;
@@ -1296,27 +1334,45 @@ h3{
         display: none !important;
     } */
 }
-@media (min-width: 770px) {
+@media (min-width: 770px) and (max-width: 796px) {
     header{
         background-color: white;
     }
     main {
         padding-top: 140px;
     }
+    .search-wrapper {
+        flex: 0 1 auto;
+        min-width: 100px;
+        max-width: 200px;
+        margin: 0 20px;
+    }
     #search{
         border:  1px solid green;
         border-radius: 100px;
-        width: 100%;
         align-items: center;
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 14px;
     }
+    
     #hotline-number{
         color: black;
     }
     .hotline-text{
         display: flex;
     }
-    .search-wrapper{
-        min-width: 200px;
+    .search-wrapper {
+        flex: 0 1 auto;
+        min-width: 500px;
+        max-width: 800px;
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+    #search {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 14px;
     }
     .categories-nav{
         display: none;
@@ -1427,7 +1483,33 @@ h3{
         display:  none;
     }
 }
+@media (min-width: 797px) and (max-width: 992px) {
+    header{
+        background-color: #fff;
+    }
+    #hotline-number{
+        color: #000000;
+    }
+    #search{
+        border: 1px solid green;
+    }
+    .categories-nav{
+        display: none;
+    }
+    .menu-bar{
+        display: flex;
+    }
+    .desktop-screen-categories{
+        padding-top: 150px;
+    }
+    .categories.row{
+        display: none;
+    }
+    .product-grid{display: none;}
+    .watch-more{display: none;}
 
+
+}
 @media (min-width: 992px) {
     main {
         padding-top: 160px !important;
@@ -1450,19 +1532,20 @@ h3{
     .header-container{
         justify-content: space-between;
     }
+    .hotline-wrapper{
+        text-align: right;
+    }
     .search-wrapper{
+        min-width: 600px;
+        max-width: 800px;
         flex: 0 1 auto;
         display: flex;
         justify-content: center;
     }
-    .hotline-wrapper{
-        text-align: right;
-    }
-    #search{
-        border:  1px solid green;
-        border-radius: 100px;
-        min-width: 400px;
-        max-width: 450px;
+    #search {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 14px;
     }
     .hotline-text{
         display: flex;
@@ -1572,6 +1655,14 @@ h3{
         width: 25%;
     } */
 }
+
+/* @media (min-width: 1103px) and (max-width: 11) {
+    #search{
+        min-width: 700px;
+        max-width: 900px;
+    }
+} */
+
 @media (min-width: 992px) and (max-width: 1187px) {
     #partners .carousel-item [class*="col-"] {
         flex: 0 0 auto;
@@ -1593,30 +1684,19 @@ h3{
         object-fit: contain;
     }
 }
-@media (min-width: 1038px) and (max-width: 1102){
-    #search{
-        border:  1px solid green;
-        border-radius: 100px;
-        min-width: 1000px;
+
+/* Desktop lớn (≥ 1082px) */
+@media (min-width: 1082px) {
+    .search-wrapper {
+        flex: 0 1 auto;
+        min-width: 600px;
+        max-width: 800px;
+        margin: 0 20px;
     }
-}
-@media (min-width: 1103px) and (max-width: 1500px) {
-    #search{
-        border:  1px solid green;
-        border-radius: 100px;
-        max-width: 10000px;
-    }
-}
-/* @media (min-width: 1440px) {
-    #search{
-        min-width: 900px;
-    }
-} */
-@media (min-width: 1501px) {
-    #search{
-        border:  1px solid green;
-        border-radius: 100px;
-        min-width: 1300px;
+    #search {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 14px;
     }
 }
 footer{
