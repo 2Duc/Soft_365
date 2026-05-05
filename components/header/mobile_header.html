@@ -1,0 +1,282 @@
+<head>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        header{
+            background-color: rgb(237, 130, 49);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            min-height: 130px;
+        }
+        header .navbar{
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        header .navbar .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .header-container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .logo-wrapper{
+            flex-shrink: 0;
+        }
+        .logo-hotline{
+            display: flex;
+            align-items: end;
+            gap: 20px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        #logo{
+            height: 40px;
+            width: auto;
+            max-width: 120px;
+            object-fit: contain;
+        }
+        .hotline-wrapper{
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        #contact{
+            display: flex;
+            flex-direction: row;
+            line-height: 1.2;
+            margin: 0; 
+            gap: 5px;
+        }
+        #contact #phone{
+            height: 24px;
+            width: 24px;
+            flex-shrink: 0;
+            margin-top: 10px;
+            object-fit: contain;
+        }
+        #contact #phone:hover{
+            height: 27px;
+            width: 27px;
+        }
+        #hotline{
+            color: grey;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+        #hotline-number{
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0;
+            color: #ffff;
+        }
+        .hotline-text{
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .search-wrapper{
+            width: 100%;
+            margin-top: 5px;
+        }
+        .search{
+            /* flex: 1;
+            min-width: 500px;
+            margin-left: 50px;
+            margin-right: 50px; */
+            width: 100%;
+        }
+        #search{
+            width: 100%;
+            border: none;
+            border-radius: 100px;
+            padding: 10px 18px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            margin: 0;
+            /* position: static; */
+        }
+        .categories-nav{
+            width: 100%;
+            /* margin-top: 0;
+            margin-right: 0;
+            padding: 130px 0 0 0; */
+            background: white;
+            position: relative;
+            /* z-index: 1020; */
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .categories-nav::-webkit-scrollbar{
+            display: none;
+        }
+        #categories{
+            background-color: white;
+            border-bottom: 1px solid #e9ecef;
+            width: 100%;
+            display: table; 
+            table-layout: auto;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 0;
+            padding: 0;
+        }
+        #categories table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+        }
+        #categories td{
+            padding: 12px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            color: #2c3e50;
+            white-space: nowrap;  
+        }
+        #categories td:first-child{
+            padding-left: 20px;
+        }
+        #categories td:last-child{
+            padding-right: 20px;
+        }
+        #categories td:hover{
+            color: rgb(237, 130, 49);
+        }
+        /* .categories-list {
+            display: inline-flex;
+            list-style: none;
+            margin: 0;
+            padding: 0 10px;
+            gap: 0;
+        }
+        
+        .categories-list li {
+            display: inline-block;
+            padding: 12px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            color: #2c3e50;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .categories-list li:first-child {
+            padding-left: 0;
+        }
+        
+        .categories-list li:last-child {
+            padding-right: 0;
+        }
+        
+        .categories-list li:hover {
+            color: rgb(237, 130, 49);
+        }
+        
+        .separator {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            color: #ccc;
+        } */
+        @media (max-width: 768px) {
+            #categories td {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            #categories td:first-child {
+                padding-left: 12px;
+            }
+            #categories td:last-child {
+                padding-right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <div class="header-container">
+                    <div class="col logo-hotline">
+                        <div class="logo-wrapper">
+                            <img id="logo" src="./assets/soft365.png">
+                        </div>
+                        <div class="hotline-wrapper">
+                            <div id="contact">
+                                <img id="phone" src="./assets/phone_icon.svg" alt="">
+                                <div class="hotline-text">
+                                    <p id="hotline">hotline 24/7</p>
+                                    <p id="hotline-number">0936 362 158</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-wrapper">
+                <div class="search">
+                    <input id="search" type="text"placeholder="Bạn cần tìm kiếm sản phẩm gì ?">
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="categories-nav">
+        <div id="categories">
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Khuyến mãi</td>
+                    <td></td>
+                    <td>Tư vấn giải pháp</td>
+                    <td></td>
+                    <td>Tư vấn cấu hình</td>
+                    <td></td>
+                    <td>Sản phẩm vừa xem</td>
+                </tr>
+            </table>
+        </div>
+        <!-- <ul>
+            <li class="categories-list">
+                <li><span class="separator"></span></li>
+                <li>Khuyến mãi</li>
+                <li><span class="separator"></span></li>
+                <li>Tư vấn giải pháp</li>
+                <li><span class="separator"></span></li>
+                <li>Tư vấn cấu hình</li>
+                <li><span class="separator"></span></li>
+                <li>Sản phẩm vừa xem</li>
+            </li>
+        </ul> -->
+    </div>
+</body>
