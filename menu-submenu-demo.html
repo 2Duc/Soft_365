@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft365 – Demo submenu header (desktop)</title>
+    <style>
+        /* =========================================================
+           DEMO: Submenu header Soft365 – chạy thử responsive
+           Mở file này trên trình duyệt, thu phóng cửa sổ để test.
+           ========================================================= */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eee;
+            min-height: 100vh;
+        }
+
+        /* ----- HEADER cố định ----- */
+        header {
+            background: #fff;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1030;
+            /* QUAN TRỌNG: overflow visible để submenu không bị cắt */
+            overflow: visible;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        /* Thanh logo + search + hotline (rút gọn) */
+        .navbar {
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .logo { font-weight: 800; font-size: 22px; color: #333; }
+        .logo span { color: rgb(237, 130, 49); }
+        .search {
+            flex: 1;
+            max-width: 520px;
+        }
+        .search input {
+            width: 100%;
+            border: 1px solid #008000;
+            border-radius: 100px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        .hotline { text-align: right; font-size: 13px; color: #666; }
+        .hotline strong { display: block; color: #000; font-size: 16px; }
+
+        /* =========================================================
+           MENU BAR – desktop
+           NGUYÊN NHÂN LỖI CŨ: overflow:auto / overflow-x:auto trên
+           .menu-bar CẮT mất submenu (position:absolute).
+           SỬA: luôn overflow: visible trên .menu-bar, ul, li, header.
+           ========================================================= */
+        .menu-bar {
+            background: #fff;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            overflow: visible; /* ← BẮT BUỘC */
+            display: none; /* ẩn trên mobile, hiện từ 770px */
+        }
+        .menu-bar ul {
+            display: inline-flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: stretch;
+            overflow: visible;
+        }
+        .menu-bar ul li {
+            position: relative; /* neo cho submenu absolute */
+            margin: 0 4px;
+            padding: 0;
+            overflow: visible;
+        }
+        .menu-bar ul li > a.menu {
+            display: block;
+            padding: 12px 14px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            border-radius: 3px;
+            transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+        /* Highlight cam khi hover – khớp soft365.vn */
+        .menu-bar ul li:hover > a.menu {
+            background: rgb(237, 130, 49);
+            color: #fff;
+        }
+
+        /* ----- Submenu mặc định ẩn ----- */
+        .sub-menu-1 { display: none; }
+
+        /* ----- Hiện submenu khi hover li cha -----
+           Selector: li:hover > .sub-menu-1 (con trực tiếp) */
+        .menu-bar ul li:hover > .sub-menu-1 {
+            display: block;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-top: 3px solid rgb(237, 130, 49);
+            z-index: 2000;
+            min-width: 220px;
+            text-align: left;
+        }
+
+        /* Danh sách link trong submenu cột đơn (PHẦN CỨNG / PHẦN MỀM) */
+        .menu-bar ul li:hover > .sub-menu-1 ul {
+            display: block;
+            margin: 8px 0;
+            padding: 0;
+            list-style: none;
+        }
+        .menu-bar ul li:hover > .sub-menu-1 ul li {
+            margin: 0;
+            padding: 0;
+            width: auto;
+        }
+        .menu-bar ul li:hover > .sub-menu-1 ul li a {
+            display: block;
+            padding: 10px 20px;
+            color: #2c3e50;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .menu-bar ul li:hover > .sub-menu-1 ul li a:hover {
+            color: rgb(237, 130, 49);
+            background: #fff6ef;
+        }
+
+        /* Cột đơn PHẦN CỨNG / PHẦN MỀM */
+        .menu-bar ul li:hover > .sub-menu-column {
+            min-width: 230px;
+            padding: 6px 0;
+        }
+
+        /* Mega-menu nhiều nhóm (GIẢI PHÁP IT 3 cột, DỊCH VỤ IT 4 cột) */
+        .menu-bar ul li:hover > .sub-menu-groups {
+            min-width: 780px;
+            max-width: 920px;
+            padding: 24px 28px 16px;
+        }
+        .sub-menu-groups-grid {
+            display: grid;
+            gap: 22px 36px;
+        }
+        .sub-menu-groups-3col .sub-menu-groups-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .sub-menu-groups-4col .sub-menu-groups-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .sub-menu-group h4 {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .sub-menu-group ul { list-style: none; margin: 0; padding: 0; }
+        .sub-menu-group ul li a {
+            display: block;
+            padding: 6px 0 !important;
+            color: #555 !important;
+            font-weight: 400 !important;
+            font-size: 13.5px;
+            white-space: normal !important;
+            line-height: 1.4;
+        }
+        .sub-menu-group ul li a:hover {
+            color: rgb(237, 130, 49) !important;
+            background: transparent !important;
+        }
+        .sub-menu-more {
+            text-align: right;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+        }
+        .sub-menu-more a {
+            color: rgb(237, 130, 49);
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        /* Panel đối tác */
+        .menu-bar ul li:hover > .sub-menu-partners {
+            min-width: 720px;
+            max-width: 900px;
+            padding: 24px 28px;
+            left: auto;
+            right: 0; /* căn phải để không tràn màn hình */
+        }
+        .sub-menu-partners-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 16px;
+        }
+        .sub-menu-partners-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .partner-logo {
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 6px;
+            min-height: 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+        }
+        .partner-logo span {
+            font-size: 10px;
+            color: #999;
+            font-weight: 500;
+        }
+        .sub-menu-partners-index {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+            font-size: 12.5px;
+            color: #888;
+        }
+        .sub-menu-partners-index span.active {
+            color: rgb(237, 130, 49);
+            font-weight: bold;
+        }
+
+        /* Nội dung trang giả */
+        main {
+            padding: 160px 24px 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .hint {
+            background: #fff;
+            border-left: 4px solid rgb(237, 130, 49);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .hint code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            min-height: 100px;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 769px) {
+            .menu-bar { display: none !important; }
+            .search { display: none; }
+            main { padding-top: 80px; }
+            .hint::before { content: "📱 Mobile: menu-bar ẩn (dùng mobile_header). "; }
+        }
+        @media (min-width: 770px) {
+            .menu-bar {
+                display: block !important;
+                overflow: visible !important; /* KHÔNG overflow-x:auto */
+            }
+        }
+        @media (min-width: 992px) {
+            .menu-bar {
+                display: flex !important;
+                justify-content: center;
+                overflow: visible !important; /* KHÔNG overflow:auto */
+            }
+        }
+        /* Thu hẹp mega-menu trên màn vừa */
+        @media (min-width: 770px) and (max-width: 991px) {
+            .menu-bar ul li:hover > .sub-menu-groups {
+                min-width: 560px;
+                max-width: 90vw;
+            }
+            .sub-menu-groups-4col .sub-menu-groups-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .sub-menu-groups-3col .sub-menu-groups-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .menu-bar ul li:hover > .sub-menu-partners {
+                min-width: 480px;
+            }
+            .sub-menu-partners-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="logo">SOFT<span>365</span></div>
+        <div class="search">
+            <input type="text" placeholder="Bạn cần tìm kiếm sản phẩm gì ?">
+        </div>
+        <div class="hotline">
+            hotline 24/7
+            <strong>0936 362 158</strong>
+        </div>
+    </div>
+
+    <!-- ========== MENU BAR ========== -->
+    <div class="menu-bar">
+        <ul>
+            <!-- PHẦN CỨNG: dropdown 1 cột -->
+            <li>
+                <a class="menu" href="#">PHẦN CỨNG</a>
+                <div class="sub-menu-1 sub-menu-column">
+                    <ul>
+                        <li><a href="#">Máy chủ - Server</a></li>
+                        <li><a href="#">PC - Workstation</a></li>
+                        <li><a href="#">Laptop</a></li>
+                        <li><a href="#">Thiết bị mạng</a></li>
+                        <li><a href="#">Thiết bị lưu trữ</a></li>
+                        <li><a href="#">Thiết bị văn phòng</a></li>
+                        <li><a href="#">Camera</a></li>
+                        <li><a href="#">Màn hình máy tính</a></li>
+                        <li><a href="#">Linh kiện máy tính</a></li>
+                        <li><a href="#">Phụ kiện</a></li>
+                        <li><a href="#">Tivi</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- PHẦN MỀM: dropdown 1 cột -->
+            <li>
+                <a class="menu" href="#">PHẦN MỀM</a>
+                <div class="sub-menu-1 sub-menu-column">
+                    <ul>
+                        <li><a href="#">Phần mềm bảo mật</a></li>
+                        <li><a href="#">Phần mềm hệ thống</a></li>
+                        <li><a href="#">Phần mềm Database</a></li>
+                        <li><a href="#">Phần mềm ảo hóa</a></li>
+                        <li><a href="#">Phần mềm Đồ họa, Media</a></li>
+                        <li><a href="#">Thiết kế kỹ thuật, xây dựng</a></li>
+                        <li><a href="#">Phần mềm văn phòng</a></li>
+                        <li><a href="#">Phần mềm lập trình</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- GIẢI PHÁP IT: mega 3 cột -->
+            <li>
+                <a class="menu" href="#">GIẢI PHÁP IT</a>
+                <div class="sub-menu-1 sub-menu-groups sub-menu-groups-3col">
+                    <div class="sub-menu-groups-grid">
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp hạ tầng IT</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp hạ tầng máy chủ</a></li>
+                                <li><a href="#">Giải pháp hạ tầng mạng</a></li>
+                                <li><a href="#">Giải pháp hạ tầng Cloud</a></li>
+                                <li><a href="#">Giải pháp hạ tầng lưu trữ</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp bảo mật</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp CyberSecurity</a></li>
+                                <li><a href="#">Bảo mật Data Center</a></li>
+                                <li><a href="#">Bảo mật Cloud</a></li>
+                                <li><a href="#">Bảo mật Endpoint</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp Digital Workspace</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp Microsoft 365</a></li>
+                                <li><a href="#">Giải pháp cộng tác trực tuyến</a></li>
+                                <li><a href="#">Giải pháp Email doanh nghiệp</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp số hóa</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp số hóa tài liệu</a></li>
+                                <li><a href="#">Giải pháp số hóa quy trình</a></li>
+                                <li><a href="#">Giải pháp ký điện tử</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp Database</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp quản trị Database</a></li>
+                                <li><a href="#">Giải pháp Backup Database</a></li>
+                                <li><a href="#">Giải pháp phân tích Database</a></li>
+                                <li><a href="#">Giải pháp giám sát Database</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Giải pháp AI</h4>
+                            <ul>
+                                <li><a href="#">Giải pháp Chatbot AI</a></li>
+                                <li><a href="#">Giải pháp thiết kế AI</a></li>
+                                <li><a href="#">Giải pháp lập trình AI</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sub-menu-more"><a href="#">Xem thêm tất cả giải pháp ›</a></div>
+                </div>
+            </li>
+
+            <!-- DỊCH VỤ IT: mega 4 cột -->
+            <li>
+                <a class="menu" href="#">DỊCH VỤ IT</a>
+                <div class="sub-menu-1 sub-menu-groups sub-menu-groups-4col">
+                    <div class="sub-menu-groups-grid">
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ IT Services</h4>
+                            <ul>
+                                <li><a href="#">Dịch vụ IT Onsite</a></li>
+                                <li><a href="#">Dịch vụ IT Outsourcing</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ máy chủ</h4>
+                            <ul>
+                                <li><a href="#">Dịch vụ triển khai hệ thống Server</a></li>
+                                <li><a href="#">Dịch vụ cài đặt, cấu hình Server</a></li>
+                                <li><a href="#">Bảo dưỡng, nâng cấp Server</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ hạ tầng mạng</h4>
+                            <ul>
+                                <li><a href="#">Dịch vụ triển khai hạ tầng Switch</a></li>
+                                <li><a href="#">Dịch vụ triển khai hạ tầng Wifi AP</a></li>
+                                <li><a href="#">Dịch vụ triển khai Firewall</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ Oracle</h4>
+                            <ul>
+                                <li><a href="#">Dịch vụ hỗ trợ Oracle ACS</a></li>
+                                <li><a href="#">Dịch vụ Oracle Premier Support</a></li>
+                                <li><a href="#">Dịch vụ Oracle SaaS Support</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ lưu trữ dữ liệu</h4>
+                            <ul>
+                                <li><a href="#">Dịch vụ triển khai Storage Server</a></li>
+                                <li><a href="#">Dịch vụ triển khai NAS</a></li>
+                                <li><a href="#">Dịch vụ triển khai Cloud Storage</a></li>
+                                <li><a href="#">Dịch vụ Backup - Recovery</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ triển khai phần mềm</h4>
+                            <ul>
+                                <li><a href="#">Triển khai Microsoft 365</a></li>
+                                <li><a href="#">Triển khai phần mềm bảo mật</a></li>
+                                <li><a href="#">Triển khai phần mềm ảo hóa</a></li>
+                                <li><a href="#">Triển khai SharePoint</a></li>
+                            </ul>
+                        </div>
+                        <div class="sub-menu-group">
+                            <h4>Dịch vụ đào tạo</h4>
+                            <ul>
+                                <li><a href="#">Đào tạo người dùng Microsoft 365</a></li>
+                                <li><a href="#">Đào tạo Quản trị Microsoft 365</a></li>
+                                <li><a href="#">Đào tạo Power BI</a></li>
+                                <li><a href="#">Đào tạo SharePoint</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sub-menu-more"><a href="#">Xem thêm tất cả dịch vụ ›</a></div>
+                </div>
+            </li>
+
+            <!-- DANH MỤC ĐỐI TÁC -->
+            <li>
+                <a class="menu" href="#">DANH MỤC ĐỐI TÁC</a>
+                <div class="sub-menu-1 sub-menu-partners">
+                    <p class="sub-menu-partners-title">SOFT365 LÀ ĐỐI TÁC CHIẾN LƯỢC CỦA NHIỀU NHÃN HÀNG LỚN</p>
+                    <div class="sub-menu-partners-grid">
+                        <div class="partner-logo">Microsoft<span>Solutions Partner</span></div>
+                        <div class="partner-logo">Adobe<span>Gold Partner</span></div>
+                        <div class="partner-logo">Autodesk<span>Reseller</span></div>
+                        <div class="partner-logo">TeamViewer<span>Distributor</span></div>
+                        <div class="partner-logo">VMware<span>Principal</span></div>
+                        <div class="partner-logo">Oracle<span>Premium</span></div>
+                        <div class="partner-logo">Dell<span>Platinum</span></div>
+                        <div class="partner-logo">HPE<span>Business</span></div>
+                        <div class="partner-logo">Fortinet<span>Silver</span></div>
+                        <div class="partner-logo">Red Hat<span>Premier</span></div>
+                        <div class="partner-logo">Veeam<span>ProPartner</span></div>
+                        <div class="partner-logo">Kaspersky<span>Gold</span></div>
+                    </div>
+                    <div class="sub-menu-partners-index">
+                        <span class="active">ĐỐI TÁC SOFT365</span>
+                        <span>A-B-C-D</span>
+                        <span>E-F-G-H</span>
+                        <span>I-J-K-L</span>
+                        <span>M-N-O-P</span>
+                        <span>Q-R-S-T</span>
+                        <span>U-V-W-X-Y-Z</span>
+                    </div>
+                </div>
+            </li>
+
+            <li><a class="menu" href="#">TIN TỨC</a></li>
+            <li><a class="menu" href="#">TUYỂN DỤNG</a></li>
+            <li><a class="menu" href="#">LIÊN HỆ</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <div class="hint">
+        <strong>Cách test:</strong> Thu phóng cửa sổ trình duyệt ≥ 770px rồi di chuột vào
+        <code>PHẦN CỨNG</code>, <code>PHẦN MỀM</code>, <code>GIẢI PHÁP IT</code>,
+        <code>DỊCH VỤ IT</code>, <code>DANH MỤC ĐỐI TÁC</code>.<br>
+        <strong>Nguyên nhân lỗi cũ:</strong> <code>overflow: auto</code> / <code>overflow-x: auto</code>
+        trên <code>.menu-bar</code> trong media query desktop → cắt submenu absolute.<br>
+        <strong>Sửa:</strong> đặt <code>overflow: visible !important</code> trên
+        <code>header</code>, <code>.menu-bar</code>, <code>.menu-bar ul</code>, <code>li</code>.
+    </div>
+    <div class="cards">
+        <div class="card">Nội dung trang giả lập…</div>
+        <div class="card">Hover menu phía trên để xem submenu.</div>
+        <div class="card">Resize cửa sổ để kiểm tra responsive.</div>
+    </div>
+</main>
+</body>
+</html>
